@@ -1,8 +1,29 @@
 import time
 import random
 
+knife_random = random.randint(6,15)
+ak47_random = random.randint(40,100)
+rifle_random = random.randint(30,70)
+glock_random = random.randint(40,90)
+hammer_random = random.randint(5,10)
+
+
 money = 0
 inv = []
+all_wepons = [
+
+    {"Name" : "Knife", "Range" : 1, "Damage" : knife_random},
+    {"Name" : "AK47", "Range" : 140, "Damage" : ak47_random},
+    {"Name" : "Rifle", "Range" : 180, "Damage" : rifle_random},
+    {"Name" : "Glock", "Range" : 50, "Damage" : glock_random},
+    {"Name" : "Hammer", "Range" : 2, "Damage" : hammer_random}
+
+]
+
+
+
+
+
 
 def intro():
     print("------------------------")
@@ -140,10 +161,36 @@ def rpg():
             print("")
             print("")
 
+
 def rpg_continued():
+    random_weapon = random.choice(all_wepons)
+
     print("")
     print("")
+    print("You found a", random_weapon["Name"])
     print("")
+    print("This deals", random_weapon["Damage"], "damage")
+    print("")
+    print("You can use this up to", random_weapon["Range"], "meters")
+    print("")
+    print("----------------------------------------------------------")
+    print("")
+
+    inv.append(random_weapon)
+    print("Inventory:")
+    print("")
+    print("")
+    for item in inv:
+        print("Name:", item["Name"])
+        print("Range:", item["Range"])
+        print("Damage:", item["Damage"])
+        print("")
+
+    print("")
+    print("You can press 'E' at anytime when we ask for input to show your inventory.")
+    print("")
+    print("")
+
 
 
 #MAIN
