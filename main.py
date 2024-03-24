@@ -8,19 +8,123 @@ glock_random = random.randint(40,90)
 hammer_random = random.randint(5,10)
 
 
+normal_battle = 50
+level_two_battle = 100
+player_health = 0
 money = 0
 inv = []
 all_wepons = [
 
-    {"Name" : "Knife", "Range" : 1, "Damage" : knife_random},
-    {"Name" : "AK47", "Range" : 140, "Damage" : ak47_random},
-    {"Name" : "Rifle", "Range" : 180, "Damage" : rifle_random},
-    {"Name" : "Glock", "Range" : 50, "Damage" : glock_random},
-    {"Name" : "Hammer", "Range" : 2, "Damage" : hammer_random}
+    {"Name" : "Knife",
+     "Range" : 1,
+     "Damage" : knife_random
+     },
+
+
+    {"Name" : "AK47",
+     "Range" : 140,
+     "Damage" : ak47_random
+     },
+
+
+    {"Name" : "Rifle",
+     "Range" : 180,
+     "Damage" : rifle_random
+     },
+
+
+    {"Name" : "Glock",
+     "Range" : 50,
+     "Damage" : glock_random
+     },
+
+    {"Name" : "Hammer",
+     "Range" : 2,
+     "Damage" : hammer_random
+     }
 
 ]
 
 
+lacelle_attacks_hash = [
+
+    {"Name" : "Python Program", "Damage" : random.randint(5, 15), "Rewards" : normal_battle},
+    {"Name" : "Godot Throw", "Damage" : random.randint(15, 25), "Rewards" : normal_battle},
+    {"Name" : "Rant", "Damage" : random.randint(25, 40), "Rewards" : normal_battle}
+
+]
+
+denham_attacks_hash = [
+
+    {"Name": "Basketball", "Damage": random.randint(25, 40), "Rewards": level_two_battle},
+    {"Name": "Podium Chuck", "Damage": random.randint(30, 50), "Rewards": level_two_battle},
+    {"Name": "Stop Vaping Boys", "Damage": random.randint(50, 80), "Rewards": level_two_battle}
+
+]
+
+corliss_attacks_hash = [
+
+    {"Name": "Homework", "Damage" : random.randint(5, 10), "Rewards": normal_battle},
+    {"Name": "Complex Equation", "Damage": random.randint(15, 25), "Rewards": normal_battle},
+    {"Name": "Problem", "Damage" : random.randint(25, 30), "Rewards": normal_battle}
+
+]
+
+
+lacelle_attacks = random.choice(lacelle_attacks_hash)
+denham_attacks = random.choice(denham_attacks_hash)
+corliss_attacks = random.choice(corliss_attacks_hash)
+def player():
+    global player_health
+    print("")
+    player_name = input("What would you like to name your player? :  ")
+    print("")
+    player_age = int(input("how old is your in game player? :  "))
+
+
+    if player_age < 10:
+        player_health += 30
+
+    elif player_age < 20:
+        player_health += 60
+
+    elif player_age < 30:
+        player_health += 100
+
+    elif player_age < 40:
+        player_health += 90
+
+    elif player_age < 50:
+        player_health += 50
+
+    elif player_age > 60:
+        player_health += 20
+
+    player_hash = [
+
+        {"Name": player_name,
+         "Health": player_health
+         }
+
+    ]
+
+
+    player_usable_name = random.choice(player_hash)
+    print("")
+    print("")
+    print("Your player is called", player_usable_name["Name"], "it has", player_usable_name["Health"], "health.")
+
+
+
+def enemy():
+    print("")
+
+    enemy_hash = [
+
+        {"Name" : "Mr. Lacelles", "Type" : "Computer", "Level" : 1, "Attack" : lacelle_attacks},
+        {"Name" : "Mr. Denham", "Type" : "Boss", "Level" : 2, "Attack" : denham_attacks},
+        {"Name" : "Mr. Corliss", "Type" : "Math", "Level" : 1, "Attack" : corliss_attacks}
+    ]
 
 
 
@@ -189,7 +293,7 @@ def rpg_continued():
     print("")
     print("You can press 'E' at anytime when we ask for input to show your inventory.")
     print("")
-    print("")
+    player()
 
 
 
