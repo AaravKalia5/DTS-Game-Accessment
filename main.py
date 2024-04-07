@@ -7,6 +7,7 @@ rifle_random = random.randint(30,70)
 glock_random = random.randint(40,90)
 hammer_random = random.randint(5,10)
 
+enemy_distance = random.randint(1,180)
 
 normal_battle = 50
 level_two_battle = 100
@@ -48,25 +49,25 @@ all_wepons = [
 
 lacelle_attacks_hash = [
 
-    {"Name" : "Python Program", "Damage" : random.randint(5, 15), "Rewards" : normal_battle},
-    {"Name" : "Godot Throw", "Damage" : random.randint(15, 25), "Rewards" : normal_battle},
-    {"Name" : "Rant", "Damage" : random.randint(25, 40), "Rewards" : normal_battle}
+    {"Name" : "Python Program", "Damage" : random.randint(5, 15), "Rewards" : normal_battle, "Range" : 1},
+    {"Name" : "Godot Throw", "Damage" : random.randint(15, 25), "Rewards" : normal_battle, "Range" : 40},
+    {"Name" : "Rant", "Damage" : random.randint(25, 40), "Rewards" : normal_battle, "Range" : 60}
 
 ]
 
 denham_attacks_hash = [
 
-    {"Name": "Basketball", "Damage": random.randint(25, 40), "Rewards": level_two_battle},
-    {"Name": "Podium Chuck", "Damage": random.randint(30, 50), "Rewards": level_two_battle},
-    {"Name": "Stop Vaping Boys", "Damage": random.randint(50, 80), "Rewards": level_two_battle}
+    {"Name": "Basketball", "Damage": random.randint(25, 40), "Rewards": level_two_battle, "Range" : 150},
+    {"Name": "Podium Chuck", "Damage": random.randint(30, 50), "Rewards": level_two_battle, "Range" : 100},
+    {"Name": "''Stop Vaping Boys''", "Damage": random.randint(50, 80), "Rewards": level_two_battle, "Range" : 70}
 
 ]
 
 corliss_attacks_hash = [
 
-    {"Name": "Homework", "Damage" : random.randint(5, 10), "Rewards": normal_battle},
-    {"Name": "Complex Equation", "Damage": random.randint(15, 25), "Rewards": normal_battle},
-    {"Name": "Problem", "Damage" : random.randint(25, 30), "Rewards": normal_battle}
+    {"Name": "Homework", "Damage" : random.randint(5, 10), "Rewards": normal_battle, "Range" : 60},
+    {"Name": "Complex Equation", "Damage": random.randint(15, 25), "Rewards": normal_battle, "Range" : 80},
+    {"Name": "Problem", "Damage" : random.randint(25, 30), "Rewards": normal_battle, "Range" : 100}
 
 ]
 
@@ -83,22 +84,22 @@ def player():
 
 
     if player_age < 10:
-        player_health += 30
+        player_health = 30
 
     elif player_age < 20:
-        player_health += 60
+        player_health = 60
 
     elif player_age < 30:
-        player_health += 100
+        player_health = 100
 
     elif player_age < 40:
-        player_health += 90
+        player_health = 90
 
     elif player_age < 50:
-        player_health += 50
+        player_health = 50
 
     elif player_age > 60:
-        player_health += 20
+        player_health = 20
 
     player_hash = [
 
@@ -113,20 +114,40 @@ def player():
     print("")
     print("")
     print("Your player is called", player_usable_name["Name"], "it has", player_usable_name["Health"], "health.")
-
-
-
-def enemy():
     print("")
 
-    enemy_hash = [
+    while True:
+        try:
+            user_input = int(input("Press '1' to continue or '2' to change name or age."))
 
-        {"Name" : "Mr. Lacelles", "Type" : "Computer", "Level" : 1, "Attack" : lacelle_attacks},
-        {"Name" : "Mr. Denham", "Type" : "Boss", "Level" : 2, "Attack" : denham_attacks},
-        {"Name" : "Mr. Corliss", "Type" : "Math", "Level" : 1, "Attack" : corliss_attacks}
-    ]
+            if user_input == 1:
+                rpg_real_fights()
+                break
+
+            elif user_input == 2:
+                player()
+                break
+
+            else:
+                print("")
+                print("Please Enter 1 or 2")
+                print("")
+
+        except ValueError:
+            print("Please Enter a number.")
 
 
+
+
+
+enemy_hash = [
+
+    {"Name" : "Mr. Lacelles", "Type" : "Computer", "Level" : 1, "Attack" : lacelle_attacks},
+    {"Name" : "Mr. Denham", "Type" : "Boss", "Level" : 2, "Attack" : denham_attacks},
+    {"Name" : "Mr. Corliss", "Type" : "Math", "Level" : 1, "Attack" : corliss_attacks}
+]
+
+enemy = random.choice(enemy_hash)
 
 
 def intro():
@@ -203,6 +224,7 @@ def context():
 def map():
     print("")
     print("")
+    print("")
     print("This is the map:")
     print("")
     print("-------")
@@ -227,7 +249,7 @@ def map():
 
 
     while True:
-        user_input = input("Enter here: ").upper()
+        user_input = input("What area would you like to to go to? :  ").upper()
 
         if user_input == "A":
             rpg()
@@ -276,11 +298,13 @@ def rpg_continued():
     print("This deals", random_weapon["Damage"], "damage")
     print("")
     print("You can use this up to", random_weapon["Range"], "meters")
+
+
+    inv.append(random_weapon)
+
     print("")
     print("----------------------------------------------------------")
     print("")
-
-    inv.append(random_weapon)
     print("Inventory:")
     print("")
     print("")
@@ -291,10 +315,67 @@ def rpg_continued():
         print("")
 
     print("")
-    print("You can press 'E' at anytime when we ask for input to show your inventory.")
+    print("----------------------------------------------------------")
     print("")
     player()
 
+
+def rpg_real_fights():
+    print("")
+    print("You have spotted,", enemy["Name"], "\nAttack :", enemy["Attack"]["Name"], "\nDamage :", enemy["Attack"]["Damage"], "\nRange :", enemy["Attack"]["Range"], "\nDistance :", enemy_distance)
+    print("")
+    print("")
+    while True:
+        try:
+            user_input = input("Press 'F' to fight \nPress 'R' to run away \nPress 'E' to view inventory").upper()
+            print("")
+            print("")
+            print("")
+            if user_input == "F":
+                print("")
+                print("Continue")
+                print("")
+                break
+
+            elif user_input == "R":
+                print("")
+                print("Booo!, You ran away!! :(")
+                print("")
+                break
+
+            elif user_input == "E":
+                print("")
+                print("")
+                print("")
+                print("----------------------------------------------------------")
+                print("")
+                print("Inventory:")
+                print("")
+                print("")
+                for item in inv:
+                    print("Name:", item["Name"])
+                    print("Range:", item["Range"])
+                    print("Damage:", item["Damage"])
+                    print("")
+
+                print("")
+                print("----------------------------------------------------------")
+                print("")
+
+            else:
+                print("")
+                print("")
+                print("Use the given keys!")
+                print("")
+                print("")
+
+
+        except ValueError:
+            print("")
+            print("")
+            print("Use the given keys!")
+            print("")
+            print("")
 
 
 #MAIN
