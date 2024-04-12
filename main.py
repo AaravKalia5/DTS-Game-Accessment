@@ -1,7 +1,7 @@
-import random
-import time
+import random # import random is used to use the random function such as random.randint or random.choice
+import time #import time is used to import the time function and i use it for time.sleep
 
-# Generate random attributes for weapons
+# this is a hash which is used to store multiple variables in a single index of a list, here I use it to store the wepons and their attributes
 all_weapons = [
     {"Name": "Knife", "Range": 1, "Damage": random.randint(6, 15)},
     {"Name": "AK47", "Range": 140, "Damage": random.randint(40, 100)},
@@ -10,7 +10,7 @@ all_weapons = [
     {"Name": "Hammer", "Range": 2, "Damage": random.randint(5, 10)}
 ]
 
-# Generate random attacks for enemies
+# these hashes are for attackes for each enemy
 lacelle_attacks_hash = [
     {"Name": "Python Program", "Damage": random.randint(5, 15), "Rewards": 50, "Range": 1},
     {"Name": "Godot Throw", "Damage": random.randint(15, 25), "Rewards": 50, "Range": 40},
@@ -29,32 +29,57 @@ corliss_attacks_hash = [
     {"Name": "Problem", "Damage": random.randint(25, 30), "Rewards": 50, "Range": 100}
 ]
 
-# Define enemy types with their attributes
+zajko_attacks_hash = [
+    {"Name": "Yell", "Damage": random.randint(10, 60), "Rewards": 100, "Range": 60},
+    {"Name": "Intimidation", "Damage": random.randint(20, 80), "Rewards": 100, "Range": 80},
+    {"Name": "Stare", "Damage": random.randint(25, 30), "Rewards": 100, "Range": 100}
+]
+
+bergin_attacks_hash = [
+    {"Name": "After Assembly Speech", "Damage": random.randint(10, 20), "Rewards": 50, "Range": 70},
+    {"Name": "Park Your Mopeds Correctly", "Damage": random.randint(20, 40), "Rewards": 50, "Range": 20},
+    {"Name": "Detention", "Damage": random.randint(25, 50), "Rewards": 50, "Range": 70}
+]
+
 enemy_hash = [
-    {"Name": "Mr. Lacelles", "Type": "Computer", "Level": 1, "Attacks": lacelle_attacks_hash,
+    {"Name": "Mr. Lacelles", "Level": 1, "Attacks": lacelle_attacks_hash,
      "Health": random.randint(20, 100)},
-    {"Name": "Mr. Denham", "Type": "Boss", "Level": 2, "Attacks": denham_attacks_hash,
+    {"Name": "Mr. Denham", "Level": 2, "Attacks": denham_attacks_hash,
      "Health": random.randint(20, 100)},
-    {"Name": "Mr. Corliss", "Type": "Math", "Level": 1, "Attacks": corliss_attacks_hash,
+    {"Name": "Mr. Corliss", "Level": 1, "Attacks": corliss_attacks_hash,
+     "Health": random.randint(20, 100)},
+    {"Name": "Mr. Zajko", "Level": 2, "Attacks": zajko_attacks_hash,
+     "Health": random.randint(20, 100)},
+    {"Name": "Mr. Bergin", "Level": 1, "Attacks": bergin_attacks_hash,
      "Health": random.randint(20, 100)}
 ]
 
-# Initialize player's attributes
+
+# these are variables which are used to store one piece of information, here I use these variables to store simple player stats
 player_health = 0
 money = 0
+
+# this is a list which is used to store multiple pieces of information, here I use it as an inventory
 inventory = []
 
-# Define functions
+
+#this is a function which is used to run a specific fucntion at anytime, here I use it to reset all of the player stats for when the player desides to reset the game
+def reset_game():
+    global player_health, money, inventory
+    player_health = 0
+    money = 0
+    inventory = []
+
 
 def player_setup():
-    global player_health
-    print("Welcome to Te-Papa Wellington!")
+    global player_health # global is used to globalize the variable in the function, here I use it to globalize player_health
+    print("Welcome to Te-Papa Wellington!") #print is used to print a line of human language
     print("")
-    player_name = input("What would you like to name your player? : ")
+    player_name = input("What would you like to name your player? : ").capitalize() #input is used to take input from the user and store it in the variable that it is in, here I use it to store the player name
+    print("")                                                                       #.capatalize is used to capatalise anything, here I use it to capatalize the plaer name
+    player_age = int(input("How old is your in-game player? : ")) #an int input is a normal input but only for full numbers and it will be stored as an int not srt
     print("")
-    player_age = int(input("How old is your in-game player? : "))
-    print("")
-    if player_age < 10:
+    if player_age < 10: # an if statement is to add conditions or determine things according to other things in the program, here I use if statement to determine the player health accordint to age.
         player_health = 30
     elif player_age < 20:
         player_health = 60
@@ -67,29 +92,27 @@ def player_setup():
     elif player_age > 60:
         player_health = 20
     print("")
-    print("")
     print("Your player is called", player_name, "and has", player_health, "health.")
     print("")
 
+
 def find_weapons():
-    print("")
-    print("")
     print("You found 3 unique weapons:")
     print("")
-    time.sleep(1)
-    for _ in range(3):
+    time.sleep(1) #time.sleep is used to add time gaps in code
+    for _ in range(3): #for loops are used to repeat something for a cartain amount of times, here I use for loop to make the player find 3 random wepons
         weapon = random.choice(all_weapons)
-        while weapon in inventory:  # Ensure uniqueness of weapons
-            weapon = random.choice(all_weapons)
-        inventory.append(weapon)
-        print("")
-        print("")
+        while weapon in inventory: #while loops are used to repeat something forever as long as the conditin is met, here I am using it to repeat the randomization prosess of the wepons until I have 3
+            weapon = random.choice(all_weapons) #random.choice is used to pick a random choice from a list or hash, here I use it to pick a random wepon from the all_wepons hash
+        inventory.append(weapon) #.append is used to add something to a list or hash, her I use it to add the random wepons to the inventory list
         print("Name:", weapon["Name"])
         print("Range:", weapon["Range"])
         print("Damage:", weapon["Damage"])
         print("")
         time.sleep(1)
 
+
+#a perhenthesis function is used to add veriables in the function so they can be refered to in the function, here I use it to refer player_wepon, enemy and enemy_distance
 def battle(player_weapon, enemy, enemy_distance):
     global money
     print("You attack", enemy["Name"], "with", player_weapon["Name"])
@@ -104,19 +127,18 @@ def battle(player_weapon, enemy, enemy_distance):
             print("You defeated", enemy["Name"])
             print("")
             time.sleep(1)
-            money += enemy["Attacks"][0]["Rewards"]  # Assume all attacks have the same reward
+            money += enemy["Attacks"][0]["Rewards"]
             print("Total $", money)
             print("")
             print("")
             time.sleep(1)
-            return True
+            return True #return True is used to indicate the function a boolean value of True, here I use it to indicate when the player has won the fight
         else:
             print("")
             print(enemy["Name"], "has", enemy["Health"], "health left.")
             print("")
-
             time.sleep(1)
-            return False
+            return False #return False is used to indicate the function a boolean value of False, here I use it to indicate when the player has not yet won the fight
     else:
         print("")
         print("Enemy is out of range!")
@@ -124,11 +146,12 @@ def battle(player_weapon, enemy, enemy_distance):
         time.sleep(1)
         return False
 
+
 def run_away():
-    print("")
     print("Booo!, You ran away!! :(")
     print("")
     time.sleep(1)
+
 
 def intro():
     print("------------------------")
@@ -137,24 +160,25 @@ def intro():
     time.sleep(1)
     while True:
         print("")
-        print("")
         skip = input("Press 'S' to skip intro or press 'A' to continue : ").upper()
         print("")
         if skip == "S":
             map()
-            break
+            break #break is used to break a loop
         elif skip == "A":
             context()
             break
+        elif skip == "L":
+            reset_game()
+            intro()
+            break
         else:
-            print("")
-            print("Please use 'A' or 'S'")
+            print("Please use 'A', 'S', or 'L'")
             print("")
             time.sleep(1)
 
+
 def context():
-    print("")
-    print("")
     print("Welcome to Te-Papa Wellington!")
     print("")
     time.sleep(1)
@@ -164,7 +188,7 @@ def context():
     print("Te-Papa has been crushed by the tornado.")
     print("")
     time.sleep(1)
-    print("To rebuild Te-Papa, you will have to earn $100,000.")
+    print("To rebuild Te-Papa, you will have to earn $1000.")
     print("")
     time.sleep(1)
     print("To earn this amount, you will have to complete mini-games.")
@@ -176,13 +200,12 @@ def context():
     print("They are located all over Wellington.")
     print("")
     time.sleep(1)
-    print("You are currently standing at Te-Papa, and there are 5 mini-games in total.")
+    print("You are currently standing at Te-Papa, and there are 2 mini-games in total.")
     print("")
     print("")
     print("")
     time.sleep(1)
     while True:
-        print("")
         print("")
         user_input = input("Press 'R' to read again or press 'A' to continue : ").upper()
         print("")
@@ -193,11 +216,15 @@ def context():
         elif user_input == "A":
             map()
             break
+        elif user_input == "L":
+            reset_game()
+            intro()
+            break
         else:
-            print("")
-            print("Please use 'R' or 'A'")
+            print("Please use 'R', 'A', or 'L'")
             print("")
             time.sleep(1)
+
 
 def map():
     print("This is the map:")
@@ -213,27 +240,26 @@ def map():
     time.sleep(1)
     while True:
         print("")
-        print("")
-        user_input = input("What area would you like to go to? : ").upper()
+        user_input = input("What area would you like to go to? : ").upper() #.upper is used to make everything in a variable uppercase, here I use it to make the user_input uppercase so I can add conditions with if statements
         print("")
         print("")
         if user_input == "A":
             rpg()
             break
-
         elif user_input == "B":
             quiz()
             break
-
+        elif user_input == "L":
+            reset_game()
+            intro()
+            break
         else:
-            print("")
             print("Invalid area!")
             print("")
             time.sleep(1)
 
+
 def rpg():
-    print("")
-    print("")
     print("Welcome to the RPG Shooter")
     print("")
     time.sleep(1)
@@ -241,6 +267,7 @@ def rpg():
     print("")
     time.sleep(1)
     print("")
+    print("A level 2 boss will reward you $100, but they are mysterious")
     time.sleep(1)
     while True:
         print("")
@@ -250,8 +277,11 @@ def rpg():
             find_weapons()
             rpg_real_fights()
             break
+        elif user_input == "L":
+            reset_game()
+            intro()
+            break
         else:
-            print("")
             print("Please Enter 'A' to Start")
             print("")
             time.sleep(1)
@@ -260,43 +290,38 @@ def rpg():
 def rpg_real_fights():
     global money
     while money < 1000:
-
         enemy = random.choice(enemy_hash)
         enemy_distance = random.randint(1, 90)
-
-        enemy["Health"] = random.randint(20, 100)
+        enemy["Health"] = random.randint(20,100)
         print("")
         for attack in enemy["Attacks"]:
             attack["Damage"] = random.randint(5, 15)
             attack["Range"] = random.randint(1, 60)
         print("")
-        print("You have spotted", enemy["Name"], "\nAttack :", enemy["Attacks"][0]["Name"], "\nDamage :",
+        print("You have spotted", enemy["Name"], "\nAttack :", enemy["Attacks"][0]["Name"], "\nDamage :",  #\n is used to carry the print to a new line
               enemy["Attacks"][0]["Damage"], "\nRange :", enemy["Attacks"][0]["Range"], "\nDistance :",
-              enemy_distance)
+              enemy_distance, "\nHealth :", enemy["Health"])
         print("")
         time.sleep(1)
-
 
         print("")
         print("Choose a weapon:")
         print("")
-        for index, weapon in enumerate(inventory):
-            print(f"{index + 1}: {weapon['Name']} (Range: {weapon['Range']}, Damage: {weapon['Damage']})")
-            print("")
+        for index, weapon in enumerate(inventory): #enumerate is used to loop over a collection (like a list or tuple) and keep track of the index of the current item, here I use it to loop the 3 wepons and to keep track of their index values
+            print(f"{index + 1}: {weapon['Name']} (Range: {weapon['Range']}, Damage: {weapon['Damage']})") #f is used to add variables to a print line without adding the commas.
+            print("")                                                                                      # index + 1 is used to show the corresponding number for each wepon
             print("")
         weapon_choice = input("Enter the number of the weapon you want to use: ")
         print("")
-        try:
+        try: #try and except is used to check for user input error and to make sure the user enters the correct type eg, srt, here I use it to make sure they use the correct type of input eg, str
             weapon_index = int(weapon_choice) - 1
-            if 0 <= weapon_index < len(inventory):
+            if 0 <= weapon_index < len(inventory): #len is used to find the length of an object, here I use it to make sure that the user has enterd a valid choice which is within the given options
                 selected_weapon = inventory[weapon_index]
             else:
-                print("")
                 print("Invalid weapon choice. Defaulting to the first weapon.")
                 print("")
                 selected_weapon = inventory[0]
         except ValueError:
-            print("")
             print("Invalid input. Defaulting to the first weapon.")
             print("")
             selected_weapon = inventory[0]
@@ -311,11 +336,9 @@ def rpg_real_fights():
                     if battle(selected_weapon, enemy, enemy_distance):
                         break
                     else:
-                        print("")
                         print("No weapon with sufficient range to attack. Choose another weapon.")
                         print("")
                 else:
-                    print("")
                     print("Selected weapon is out of range. Choose another weapon.")
                     print("")
             elif user_input == "R":
@@ -332,8 +355,11 @@ def rpg_real_fights():
                     print("")
                 print("----------------------------------------------------------")
                 time.sleep(1)
+            elif user_input == "L":
+                reset_game()
+                intro()
+                break
             else:
-                print("")
                 print("Invalid input! Use the given keys.")
                 print("")
                 time.sleep(1)
@@ -352,19 +378,16 @@ def rpg_real_fights():
                 if 0 <= weapon_index < len(inventory):
                     selected_weapon = inventory[weapon_index]
                 else:
-                    print("")
                     print("Invalid weapon choice. Defaulting to the first weapon.")
                     print("")
                     selected_weapon = inventory[0]
             except ValueError:
-                print("")
                 print("Invalid input. Defaulting to the first weapon.")
                 print("")
                 selected_weapon = inventory[0]
 
-            if enemy["Health"] <= 0 or user_input == "R":
+            if enemy["Health"] <= 0 or user_input == "R": #or is used to add multiple conditions to an if statement, here I use it to make sure that if the player is dead or they decide to run away that the loop is broken
                 break
-
 
     if money >= 1000:
         print("")
@@ -375,19 +398,20 @@ def rpg_real_fights():
         print("")
         print("")
 
+
 def nz():
-    print("")
     print("----------------------------------------")
     print("")
     print("New Zealand Quiz:")
     print("")
-    # Add your New Zealand quiz questions and logic here
+    time.sleep(1)
+
     nz_questions = [
         {"question": "What is the capital of New Zealand?", "answer": "wellington"},
         {"question": "What is the largest city in New Zealand?", "answer": "auckland"},
         {"question": "What is the Maori name for New Zealand?", "answer": "aotearoa"},
         {"question": "Which bird is the national symbol of New Zealand?", "answer": "kiwi"},
-        {"question": "What is the currency of New Zealand?", "answer": "new zealand dollar"},
+        {"question": "What is the currency of New Zealand eg.USD, CAD?", "answer": "nzd"},
         {"question": "What is the national flower of New Zealand?", "answer": "silver fern"},
         {"question": "Who was the first European explorer to reach New Zealand?", "answer": "abel tasman"},
         {"question": "What is the nickname for people from New Zealand?", "answer": "kiwi"},
@@ -398,12 +422,12 @@ def nz():
     run_quiz(selected_questions)
 
 def tepapa():
-    print("")
     print("----------------------------------------")
     print("")
     print("Te Papa Quiz:")
     print("")
-    # Add your Te Papa quiz questions and logic here
+    time.sleep(1)
+
     tepapa_questions = [
         {"question": "Te papa was built in 1983", "answer": "false"},
         {"question": "Te papa is located in Wellington", "answer": "true"},
@@ -426,15 +450,17 @@ def run_quiz(questions):
         print("")
         print(q["question"])
         print("")
+        time.sleep(1)
         user_answer = input("Enter your answer: ").strip().lower()
         print("")
+        time.sleep(1)
         if user_answer == q["answer"]:
-            print("")
             print("Correct! You win $100.")
             print("")
             money += 100
         else:
             print("Incorrect!")
+            time.sleep(1)
     print("Total score: $", money)
     print("")
     print("")
@@ -444,13 +470,17 @@ def quiz():
     print("")
     print("Welcome to The Ultimate Trivia!")
     print("")
-    print("You will be asked True or False questions.")
+    time.sleep(1)
+    print("You will be asked True or False questions for Tepapa and normal questions for NZ.")
     print("")
+    time.sleep(1)
     print("Each correct question will result in an award of $100")
     print("")
+    time.sleep(1)
     while True:
         try:
             user_input = input("Press 'T' for Te Papa Quiz or 'N' for New Zealand Quiz").upper()
+            time.sleep(1)
 
             if user_input == "T":
                 tepapa()
@@ -460,14 +490,19 @@ def quiz():
                 nz()
                 break
 
+            elif user_input == "L":
+                reset_game()
+                intro()
+                break
+
             else:
-                print("")
                 print("Invalid Input!")
                 print("")
+                time.sleep(1)
 
         except ValueError:
-            print("")
             print("Invalid Input!")
             print("")
+            time.sleep(1)
 
-intro()
+intro() #this is used to call the intro function
